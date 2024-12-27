@@ -90,6 +90,23 @@ const getYear = (input) => {
     return (new Date(input)).getFullYear();
 }
 
+const postApi = async(request) =>{
+    try{
+        return await fetch('https://interview.adpeai.com/api/v2/submit-task', {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(request)
+        });
+    }
+    catch(error){
+        //Error handling for post API
+        console.log("Error while making post call", error);
+    }
+}
+
 getTasks().then((res) =>{ 
     const preparedTransactionsPerEmployee = {}
     //filtering based on previous Year
@@ -118,14 +135,27 @@ getTasks().then((res) =>{
         }
     }
     console.log("response Of top earner's ALL trransactions: ", topEarnerTransactoins.transactions);
-    return topEarnerTransactoins.transactions
+    return { id:res.id, transactions: topEarnerTransactoins.transactions}
     
 }
 
-).then( (data) => {
+).then( ({id, transactions}) => {
     //Filtering based on Type alpha
-    const filteredTramnsaction = data.filter( e => e.type === 'alpha');
-    console.log("Response after filter on TYPE APLHA", filteredTramnsaction)
-    return filteredTramnsaction;
+    const filteredTransaction = transactions.filter( e => e.type === 'alpha');
+    console.log("Response after filter on TYPE APLHA", filteredTransaction);
+    console.log("-------------------------------------------------------------------");
+    console.log("difference of totalTransactions and type filtered transaction: ", transactions.length - filteredTransaction.length);
+    console.log("-------------------------------------------------------------------");
+    return {id, transactions: filteredTransaction};
+}).then(async({id, transactions})=> {
+    //Making post API call
+
+    //prepare request bosy with transactionIDs
+    const request = {id,
+        result: transactions.map(e => e.transactionID)
+    };
+    const postApiResponse = await postApi(request);
+    console.log("postAPI Response: ", postApiResponse);
 })
-.catch(err => console.log(err))
+.catch(err => console.log(err));
+
