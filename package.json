@@ -1,0 +1,20 @@
+{
+  "name": "adp-assessment",
+  "version": "1.0.0",
+  "description": "adp-assessment",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkullWarior/ADP-assessment.git"
+  },
+  "author": "vasu Vasikarla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SkullWarior/ADP-assessment/issues"
+  },
+  "homepage": "https://github.com/SkullWarior/ADP-assessment#readme"
+}
