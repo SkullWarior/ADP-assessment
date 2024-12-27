@@ -73,10 +73,19 @@
 
 
 
+// get tasks from API
 const getTasks = async()=> {
-    const result = await fetch('https://interview.adpeai.com/api/v2/get-task');
-    return await result.json();
+    try {
+        const result = await fetch('https://interview.adpeai.com/api/v2/get-task');
+        return await result.json();
+    }
+    catch(error){
+        //Error handling
+        console.log("Error while fetching tasks data", error);
+    }
 }
+
+// get Year from timeStamp
 const getYear = (input) => {
     return (new Date(input)).getFullYear();
 }
