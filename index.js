@@ -150,12 +150,12 @@ getTasks().then((res) =>{
 }).then(async({id, transactions})=> {
     //Making post API call
 
-    //prepare request bosy with transactionIDs
-    const request = {id,
+    //prepare request body with transactionIDs
+    const request = {
+        id,
         result: transactions.map(e => e.transactionID)
     };
     const postApiResponse = await postApi(request);
-    console.log("postAPI Response: ", postApiResponse);
+    console.log("PostAPI Response: ", postApiResponse);
 })
 .catch(err => console.log(err));
-
