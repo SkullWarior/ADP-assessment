@@ -76,6 +76,7 @@
 // get tasks from API
 const getTasks = async()=> {
     try {
+        console.log('Fetching Details...');
         const result = await fetch('https://interview.adpeai.com/api/v2/get-task');
         return await result.json();
     }
@@ -91,20 +92,13 @@ const getYear = (input) => {
 }
 
 const postApi = async(request) =>{
-    try{
-        return await fetch('https://interview.adpeai.com/api/v2/submit-task', {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(request)
-        });
-    }
-    catch(error){
-        //Error handling for post API
-        console.log("Error while making post call", error);
-    }
+    return await fetch('https://interview.adpeai.com/api/v2/submit-task', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(request)
+    });
 }
 
 getTasks().then((res) =>{ 
@@ -125,17 +119,17 @@ getTasks().then((res) =>{
         }
     };
     
-    let topEarnerTransactoins = {};
+    let topEarnerTransactions = {};
     //Finding top earner's employee transactions
     for(const key in preparedTransactionsPerEmployee){
-        if(Object.keys(topEarnerTransactoins).length){
-            topEarnerTransactoins = preparedTransactionsPerEmployee[key].amount > topEarnerTransactoins.amount ? preparedTransactionsPerEmployee[key] : topEarnerTransactoins;
+        if(Object.keys(topEarnerTransactions).length){
+            topEarnerTransactions = preparedTransactionsPerEmployee[key].amount > topEarnerTransactions.amount ? preparedTransactionsPerEmployee[key] : topEarnerTransactions;
         } else {
-            topEarnerTransactoins = preparedTransactionsPerEmployee[key];
+            topEarnerTransactions = preparedTransactionsPerEmployee[key];
         }
     }
-    console.log("response Of top earner's ALL trransactions: ", topEarnerTransactoins.transactions);
-    return { id:res.id, transactions: topEarnerTransactoins.transactions}
+    console.log("response Of top earner's ALL trransactions: ", topEarnerTransactions.transactions);
+    return { id:res.id, transactions: topEarnerTransactions.transactions}
     
 }
 
@@ -144,7 +138,7 @@ getTasks().then((res) =>{
     const filteredTransaction = transactions.filter( e => e.type === 'alpha');
     console.log("Response after filter on TYPE APLHA", filteredTransaction);
     console.log("-------------------------------------------------------------------");
-    console.log("difference of totalTransactions and type filtered transaction: ", transactions.length - filteredTransaction.length);
+    console.log("difference of totalTransactions and type filtered transactions: ", transactions.length - filteredTransaction.length);
     console.log("-------------------------------------------------------------------");
     return {id, transactions: filteredTransaction};
 }).then(async({id, transactions})=> {
