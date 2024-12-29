@@ -67,8 +67,8 @@
 // console.log('running sum.js');
 // export const sum = (a, b) => a + b;
 
-// running sum.js
 // Running index.js
+// running sum.js
 // 3
 
 
@@ -104,7 +104,8 @@ const postApi = async(request) =>{
 getTasks().then((res) =>{ 
     const preparedTransactionsPerEmployee = {}
     //filtering based on previous Year
-    const filteredTransactions = res.transactions.filter( t => getYear(t.timeStamp) === getYear(new Date())-1);
+    const prevYear = getYear(new Date())-1;
+    const filteredTransactions = res.transactions.filter( t => getYear(t.timeStamp) === prevYear);
 
     for(const ele of filteredTransactions){
         //Keeping employee transaction track
